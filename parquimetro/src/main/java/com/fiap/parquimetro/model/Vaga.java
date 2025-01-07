@@ -15,6 +15,4 @@ public class Vaga {
 	private int numero;
 	private boolean disponivel;
 	private String localizacao;
-	private LocalDateTime dataCriacao;
-	private LocalDateTime dataUltimaAtualizacao;
 }
