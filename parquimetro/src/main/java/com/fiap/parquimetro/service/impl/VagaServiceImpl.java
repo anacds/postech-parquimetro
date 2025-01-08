@@ -17,8 +17,30 @@ public class VagaServiceImpl implements VagaService{
 
 	@Override
 	public List<Vaga> obterTodas() {
+		return this.vagaRepository.findAll();
+	}
+
+	@Override
+	public Vaga obterPorPlaca(String placa) {
 		return null;
 	}
 
+	@Override
+	public Vaga obterPorId(String id) {
+		return this.vagaRepository
+				.findById(id)
+				.orElseThrow(()-> new IllegalArgumentException("Vaga não existe."));
+	}
+	
+	@Override
+	public Vaga criar(Vaga vaga) {
+		return vagaRepository.save(vaga);
+		
+	}
+
+
+
+
+	
 	
 }
