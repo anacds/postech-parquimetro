@@ -1,0 +1,296 @@
+{
+	"info": {
+		"_postman_id": "fa04ac11-148a-48ba-9dbd-8ba18990f7ce",
+		"name": "Parquimetro | Luskafer | Usuário | Fiscal",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40913202"
+	},
+	"item": [
+		{
+			"name": "Criar Usuário",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"teste Silva\",\r\n  \"cpf\": 1234567829,\r\n  \"email\": \"joao.silva@email.com\",\r\n  \"numeroCelular\": 55991234567,\r\n  \"placasCarro\": [\"ABC1234\", \"XYZ5678\"],\r\n  \"preferencias\": {\r\n    \"notificacoes\": true,\r\n    \"avisoAntesDeFimDeReserva\": false\r\n  }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Usuários",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar Usuário por ID",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/usuarios/{id}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"{id}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar Usuário por ID",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Mudou Silva\",\r\n    \"cpf\": 1234567829,\r\n    \"email\": \"joao.silva@email.com\",\r\n    \"numeroCelular\": 55991234567,\r\n    \"placasCarro\": [\r\n        \"ABC1234\",\r\n        \"XYZ5678\"\r\n    ],\r\n    \"preferencias\": {\r\n        \"notificacoes\": false,\r\n        \"avisoAntesDeFimDeReserva\": true\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios/{id}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"{id}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deletar Usuário por ID",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/usuarios/{id}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"{id}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar Usuário pela Placa",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/fiscais/verificarPlaca/{placa}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"fiscais",
+						"verificarPlaca",
+						"{placa}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar Fiscal",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Fiscal teste\",\r\n    \"cpf\": 1234567829,\r\n    \"cnpj\": 2131313132132,\r\n    \"email\": \"joao.silva@email.com\",\r\n    \"numeroCelular\": 55991234567\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/fiscais",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"fiscais"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Fiscais ",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/fiscais",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"fiscais"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar Fiscal por ID",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/fiscais/{id}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"fiscais",
+						"{id}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar Fiscal por ID",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Fiscal mudou\",\r\n    \"cpf\": 1234567829,\r\n    \"cnpj\": 2131313132132,\r\n    \"email\": \"joao.silva@email.com\",\r\n    \"numeroCelular\": 12991234567\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/fiscais/{id}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"fiscais",
+						"{id}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deletar Fiscal por ID",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/fiscais/{id}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"fiscais",
+						"{id}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

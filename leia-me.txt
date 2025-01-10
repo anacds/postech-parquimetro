@@ -1,0 +1,40 @@
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+-> Criar usuário
+POST
+http://localhost:8080/usuarios
+{
+  "nome": "João Silva",
+  "cpf": 12345678901,
+  "email": "joao@example.com",
+  "numeroCelular": 987654321,
+  "placasCarro": ["ABC1234", "XYZ5678"],
+  "preferencias": {
+    "notificacoes": true,
+    "avisoAntesDeFimDeReserva": false
+  }
+}
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+-> Editar usuário
+PUT
+http://localhost:8080/usuarios/{id}
+{
+  "nome": "Mudou Silva",
+  "cpf": 12345678901,
+  "email": "joao@example.com",
+  "numeroCelular": 987654321,
+  "placasCarro": ["ABC1234", "XYZ5678"],
+  "preferencias": {
+    "notificacoes": true,
+    "avisoAntesDeFimDeReserva": false
+  }
+}
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+-> Para pesquisar placa:
+GET
+http://localhost:8080/fiscais/verificarPlaca/{placa}
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
