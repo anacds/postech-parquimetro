@@ -20,25 +20,25 @@ import com.fiap.parquimetro.service.VagaService;
 @Tag(name = "Vagas", description = "Gerenciamento de vagas disponíveis nos parquímetros.")
 public class VagaController {
 
-	@Autowired
-	private VagaService vagaService;
+  @Autowired
+  private VagaService vagaService;
 
 
-	@GetMapping
-	@Operation(summary = "Obter todas as vagas de parquímetro", description = "Endpoint para listar todas as vagas disponíveis para reserva no sistema de parquímetros.")
-	public List<Vaga> obterTodos(){
-		return vagaService.obterTodas();
-	}
-	
-	@GetMapping("/{id}")
-	@Operation(summary = "Consultar vaga por ID", description = " Endpoint que retorna os detalhes de uma vaga com base no ID da reserva no sistema de parquímetros")
-	public Vaga obterPorId(@PathVariable String id) {
-		return vagaService.obterPorId(id);
-	}
-	
-	@PostMapping
-	@Operation(summary = "Criar vaga de parquímetro", description = "Endpoint para criar uma vaga parareserva no sistema de parquímetros")
-	public Vaga criar(@RequestBody Vaga vaga) {
-		return vagaService.criar(vaga);
-	}
+  @GetMapping
+  @Operation(summary = "Obter todas as vagas de parquímetro", description = "Endpoint para listar todas as vagas disponíveis para reserva no sistema de parquímetros.")
+  public List<Vaga> obterTodos() {
+    return vagaService.obterTodas();
+  }
+
+  @GetMapping("/{id}")
+  @Operation(summary = "Consultar vaga por ID", description = " Endpoint que retorna os detalhes de uma vaga com base no ID da reserva no sistema de parquímetros")
+  public Vaga obterPorId(@PathVariable String id) {
+    return vagaService.obterPorId(id);
+  }
+
+  @PostMapping
+  @Operation(summary = "Criar vaga de parquímetro", description = "Endpoint para criar uma vaga parareserva no sistema de parquímetros")
+  public Vaga criar(@RequestBody Vaga vaga) {
+    return vagaService.criar(vaga);
+  }
 }
