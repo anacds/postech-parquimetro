@@ -109,7 +109,7 @@ public class ReservaServiceImpl implements ReservaService {
         Reserva reserva = this.reservaRepository
                 .findById(id)
                 .orElseThrow(()-> new IllegalArgumentException("A reserva não existe."));
-        reserva.setTempoSolicitadoMinutos(reserva.getTempoSolicitadoMinutos() + minutos);
+        reserva.setTempoSolicitadoMinutos(Integer.valueOf(reserva.getTempoSolicitadoMinutos() + minutos));
         reserva.setHorarioFimEstimado(reserva.getHorarioFimEstimado().plusMinutes(minutos));
         return atualizarReserva(id, reserva);
     }
