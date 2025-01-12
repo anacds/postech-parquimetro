@@ -3,6 +3,7 @@ package com.fiap.parquimetro.controller;
 import com.fiap.parquimetro.model.Reserva;
 import com.fiap.parquimetro.service.ReservaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class ReservaController {
     private ReservaService reservaService;
 
     @PostMapping
-    public Reserva criarReserva(@RequestBody Reserva reserva){
+    public ResponseEntity<?> criarReserva(@RequestBody Reserva reserva){
         return this.reservaService.criarReserva(reserva);
     }
 
@@ -37,21 +38,34 @@ public class ReservaController {
         return this.reservaService.consultaTempoRestante(id);
     }
 
-    @DeleteMapping("/{id}")
-    public void excluirReserva(@PathVariable String id){
-        this.reservaService.excluirReserva(id);
-    }
-
+    /*
     @PutMapping("/{id}")
     public void atualizarReserva(@PathVariable String id, @RequestBody Reserva reserva) {
         this.reservaService.atualizarReserva(id, reserva);
     }
-
-    /*
-    public int consultaTempoRestante(String id);
-    public Reserva adicionaMaisTempo(String id, int minutos);
-    public Reserva iniciarReserva(String id);
-    public Reserva encerrarReserva(String id);
     */
+
+    @PutMapping("/{id}/adicionar-tempo")
+    public ResponseEntity<?> adicionaMaisTempo(@PathVariable String id, @RequestBody int minutos) {
+        return this.reservaService.adicionaMaisTempo(id, minutos);
+    }
+
+    @PutMapping("/{id}/iniciar")
+    public ResponseEntity<Reserva> iniciarReserva(@PathVariable String id) {
+        Reserva reserva = this.reservaService.iniciarReserva(id);
+        return ResponseEntity.ok(reserva);
+    }
+
+    @PutMapping("/{id}/encerrar")
+    public ResponseEntity<Reserva> encerrarReserva(@PathVariable String id) {
+        Reserva reserva = this.reservaService.encerrarReserva(id);
+        return ResponseEntity.ok(reserva);
+    }
+
+    @PutMapping("/{id}/cancelar")
+    public ResponseEntity<?> cancelarReserva(@PathVariable("id") String id) {
+        return reservaService.cancelarReserva(id);
+    }
+
 
 }

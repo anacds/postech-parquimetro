@@ -19,11 +19,18 @@ public class Reserva {
     private Integer tempoUsadoMinutos;
     private String status;
     private Valor valorPago;
+
+    @DBRef
     private Vaga vaga;
-    /*
+
+    @DBRef
     private Usuario usuario;
+
+    /*
+    @DBRef
     private Regiao regiao;
     */
+
     private LocalDateTime dataCriacao;
     private LocalDateTime dataUltimaAtualizacao;
 

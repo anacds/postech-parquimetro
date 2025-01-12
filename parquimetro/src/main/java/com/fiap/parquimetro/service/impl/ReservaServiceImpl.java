@@ -1,10 +1,13 @@
 package com.fiap.parquimetro.service.impl;
 
 import com.fiap.parquimetro.model.Reserva;
-import com.fiap.parquimetro.model.Valor;
+import com.fiap.parquimetro.model.Usuario;
+import com.fiap.parquimetro.model.Vaga;
 import com.fiap.parquimetro.repository.ReservaRepository;
+import com.fiap.parquimetro.repository.UsuarioRepository;
 import com.fiap.parquimetro.repository.VagaRepository;
 import com.fiap.parquimetro.service.ReservaService;
+import com.mongodb.DuplicateKeyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -13,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -31,20 +33,63 @@ public class ReservaServiceImpl implements ReservaService {
         this.mongoTemplate = mongoTemplate;
     }
 
+    @Autowired
+    private VagaRepository vagaRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
     /*
     @Autowired
     private RegiaoRepository regiaoRepository;
-
-    @Autowired
-    private VagaRepository vagaRepository;
     */
-    
+
     @Override
-    public Reserva criarReserva(Reserva reserva) {
-        reserva.setStatus("PENDENTE");
-        reserva.setDataCriacao(LocalDateTime.now());
-        reserva.setDataUltimaAtualizacao(LocalDateTime.now());
-        return reservaRepository.save(reserva);
+    public ResponseEntity<?> criarReserva(Reserva reserva) {
+        if (reserva.getUsuario().getId() != null){
+            Usuario usuario = this.usuarioRepository
+                    .findById(reserva.getUsuario().getId())
+                    .orElseThrow(()-> new IllegalArgumentException("O usuário não existe."));
+            reserva.setUsuario(usuario);
+        } else {
+            reserva.setUsuario(null);
+        }
+
+        if (reserva.getVaga().getId() != null){
+            Vaga vaga = this.vagaRepository
+                    .findById(reserva.getVaga().getId())
+                    .orElseThrow(()-> new IllegalArgumentException("A vaga não existe."));
+            reserva.setVaga(vaga);
+        } else {
+            reserva.setVaga(null);
+        }
+
+        /*
+        if (reserva.getRegiao().getId() != null){
+            Regiao regiao = this.regiaoRepository
+                    .findById(reserva.getRegiao().getId())
+                    .orElseThrow(()-> new IllegalArgumentException("A região não existe."));
+            reserva.setRegiao(regiao);
+        } else {
+            reserva.setRegiao(null);
+        }
+        */
+
+        try {
+            reserva.setStatus("PENDENTE");
+            reserva.setDataCriacao(LocalDateTime.now());
+            reserva.setDataUltimaAtualizacao(LocalDateTime.now());
+            this.reservaRepository.save(reserva);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .build();
+        } catch (DuplicateKeyException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("A reserva já existe.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao criar a reserva: " + e.getMessage());
+        }
+
     }
 
     @Override
@@ -53,11 +98,6 @@ public class ReservaServiceImpl implements ReservaService {
                 .findById(id)
                 .orElseThrow(()-> new IllegalArgumentException("A reserva não existe."));
     }
-    /*
-    @Override
-    public List<Reserva> listarTodasReservas() {
-        return reservaRepository.findAll();
-    }*/
 
     @Override
     public List<Reserva> listarTodasReservas(Optional<String> regiao, Optional<String> placa) {
@@ -69,24 +109,35 @@ public class ReservaServiceImpl implements ReservaService {
     }
 
     @Override
-    public void excluirReserva(String id) {
-        reservaRepository.deleteById(id);
-    }
-
-    @Override
     public int consultaTempoRestante(String id) {
-        Reserva reserva = this.reservaRepository
-                            .findById(id)
-                            .orElseThrow(()-> new IllegalArgumentException("A reserva não existe."));
+        Reserva reserva = buscarReservaPorId(id);
         if (reserva.getHorarioFimEstimado() == null) {
             throw new RuntimeException("Horário de término estimado não configurado para esta reserva");
         }
         Duration duracaoReserva = Duration.between(LocalDateTime.now(), reserva.getHorarioFimEstimado());
         return (int) Math.max(0, duracaoReserva.toMinutes());
+
     }
 
+    /*
     @Override
     public ResponseEntity<?> atualizarReserva(String id, Reserva reserva) {
+        try {
+            Reserva reservaExistente = buscarReservaPorId(id);
+            reservaExistente.setDataUltimaAtualizacao(LocalDateTime.now());
+            this.reservaRepository.save(reserva);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao atualizar reserva: " + e.getMessage());
+        }
+    }
+    */
+
+    @Override
+    public ResponseEntity<?> adicionaMaisTempo(String id, int minutos) {
         try {
             Reserva reservaExistente = this.reservaRepository.findById(id).orElse(null);
 
@@ -95,9 +146,10 @@ public class ReservaServiceImpl implements ReservaService {
                         .body("Reserva não encontrada");
             }
 
-            reservaExistente.setDataUltimaAtualizacao(LocalDateTime.now());
-            this.reservaRepository.save(reserva);
-            return ResponseEntity.status(HttpStatus.OK).build();
+        reservaExistente.setTempoSolicitadoMinutos(reservaExistente.getTempoSolicitadoMinutos() + minutos);
+        reservaExistente.setHorarioFimEstimado(reservaExistente.getHorarioFimEstimado().plusMinutes(minutos));
+        this.reservaRepository.save(reservaExistente);
+        return ResponseEntity.status(HttpStatus.OK).build();
         } catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Erro ao atualizar reserva: " + e.getMessage());
@@ -105,22 +157,58 @@ public class ReservaServiceImpl implements ReservaService {
     }
 
     @Override
-    public ResponseEntity<?> adicionaMaisTempo(String id, int minutos) {
-        Reserva reserva = this.reservaRepository
-                .findById(id)
-                .orElseThrow(()-> new IllegalArgumentException("A reserva não existe."));
-        reserva.setTempoSolicitadoMinutos(reserva.getTempoSolicitadoMinutos() + minutos);
-        reserva.setHorarioFimEstimado(reserva.getHorarioFimEstimado().plusMinutes(minutos));
-        return atualizarReserva(id, reserva);
-    }
-
-    @Override
     public Reserva iniciarReserva(String id) {
-        return null;
+        Reserva reserva = buscarReservaPorId(id);
+
+        if (!"PENDENTE".equalsIgnoreCase(reserva.getStatus())) {
+            throw new RuntimeException("Apenas as reservas com status PENDENTE podem ser iniciadas.");
+        }
+
+        reserva.setStatus("ATIVA");
+        reserva.setHorarioInicio(LocalDateTime.now());
+        reserva.setDataUltimaAtualizacao(LocalDateTime.now());
+
+        return reservaRepository.save(reserva);
     }
 
     @Override
     public Reserva encerrarReserva(String id) {
-        return null;
+        Reserva reserva = buscarReservaPorId(id);
+
+        if (!"ATIVA".equalsIgnoreCase(reserva.getStatus())) {
+            throw new RuntimeException("Apenas as reservas com status ATIVA podem ser encerradas.");
+        }
+
+        reserva.setStatus("ENCERRADA");
+        reserva.setHorarioFimReal(LocalDateTime.now());
+
+        if (reserva.getHorarioInicio() != null) {
+            Duration duracao = Duration.between(reserva.getHorarioInicio(), reserva.getHorarioFimReal());
+
+            reserva.setTempoUsadoMinutos((int) duracao.toMinutes());
+        }
+
+        return reservaRepository.save(reserva);
+    }
+
+    @Override
+    public ResponseEntity<?> cancelarReserva(String id) {
+        try {
+            Reserva reserva = buscarReservaPorId(id);
+
+            if ("ATIVA".equalsIgnoreCase(reserva.getStatus()) || "ENCERRADA".equalsIgnoreCase(reserva.getStatus())) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("A reserva não pode ser cancelada pois já foi iniciada ou já foi encerrada.");
+            }
+
+            reserva.setStatus("CANCELADA");
+            reserva.setDataUltimaAtualizacao(LocalDateTime.now());
+            reservaRepository.save(reserva);
+
+            return ResponseEntity.status(HttpStatus.OK).body(reserva);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao cancelar a reserva: " + e.getMessage());
+        }
     }
 }
