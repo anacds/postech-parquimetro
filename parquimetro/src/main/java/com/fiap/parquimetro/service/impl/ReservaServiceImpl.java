@@ -1,8 +1,7 @@
 package com.fiap.parquimetro.service.impl;
 
-import com.fiap.parquimetro.model.Reserva;
-import com.fiap.parquimetro.model.Usuario;
-import com.fiap.parquimetro.model.Vaga;
+import com.fiap.parquimetro.model.*;
+import com.fiap.parquimetro.repository.RegiaoRepository;
 import com.fiap.parquimetro.repository.ReservaRepository;
 import com.fiap.parquimetro.repository.UsuarioRepository;
 import com.fiap.parquimetro.repository.VagaRepository;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ReservaServiceImpl implements ReservaService {
@@ -39,10 +37,8 @@ public class ReservaServiceImpl implements ReservaService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    /*
     @Autowired
     private RegiaoRepository regiaoRepository;
-    */
 
     @Override
     public ResponseEntity<?> criarReserva(Reserva reserva) {
@@ -64,7 +60,6 @@ public class ReservaServiceImpl implements ReservaService {
             reserva.setVaga(null);
         }
 
-        /*
         if (reserva.getRegiao().getId() != null){
             Regiao regiao = this.regiaoRepository
                     .findById(reserva.getRegiao().getId())
@@ -73,7 +68,6 @@ public class ReservaServiceImpl implements ReservaService {
         } else {
             reserva.setRegiao(null);
         }
-        */
 
         try {
             reserva.setStatus("PENDENTE");
@@ -100,11 +94,19 @@ public class ReservaServiceImpl implements ReservaService {
     }
 
     @Override
-    public List<Reserva> listarTodasReservas(Optional<String> regiao, Optional<String> placa) {
-        Query query = new Query();
-        regiao.ifPresent(r -> query.addCriteria(Criteria.where("regiao.nome").is(r)));
-        placa.ifPresent(p -> query.addCriteria(Criteria.where("usuario.placa").is(p)));
+    public List<Reserva> listarTodasReservas(){
+        return this.reservaRepository.findAll();
+    }
 
+    @Override
+    public List<Reserva> listarReservasPorRegiao(String regiao) {
+        Query query = new Query(Criteria.where("regiao.nome").is(regiao));
+        return mongoTemplate.find(query, Reserva.class);
+    }
+
+    @Override
+    public List<Reserva> listarReservasPorPlaca(String placa) {
+        Query query = new Query(Criteria.where("usuario.placasCarro").in(placa));
         return mongoTemplate.find(query, Reserva.class);
     }
 

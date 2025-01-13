@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @RestController
@@ -22,10 +21,29 @@ public class ReservaController {
         return this.reservaService.criarReserva(reserva);
     }
 
+    /*
     @GetMapping
-    public List<Reserva> listarTodasReservas(@RequestParam Optional<String> regiao,
-                                             @RequestParam Optional<String> placa) {
-        return this.reservaService.listarTodasReservas(regiao, placa);
+    public List<Reserva> listarReservas(@RequestParam Optional<String> regiao,
+                                        @RequestParam Optional<String> placa) {
+        return this.reservaService.listarReservas(regiao, placa);
+    }
+    */
+
+    @GetMapping
+    public List<Reserva> listarTodasReservas() {
+        return this.reservaService.listarTodasReservas();
+    }
+
+    @GetMapping("/regiao")
+    public ResponseEntity<List<Reserva>> listarPorRegiao(@RequestParam String regiao) {
+        List<Reserva> reservas = reservaService.listarReservasPorRegiao(regiao);
+        return ResponseEntity.ok(reservas);
+    }
+
+    @GetMapping("/placa")
+    public ResponseEntity<List<Reserva>> listarPorPlaca(@RequestParam String placa) {
+        List<Reserva> reservas = reservaService.listarReservasPorPlaca(placa);
+        return ResponseEntity.ok(reservas);
     }
 
     @GetMapping("/{id}")
