@@ -15,5 +15,6 @@ public interface VagaService {
 	public Vaga criar(Vaga vaga);
 	public void excluirVaga(String id);
 	public ResponseEntity<?> alterarVaga(String id, Vaga vaga);
+	public ResponseEntity<?> alterarDisponibilidade(String id);
 	public List<Vaga> obterPorNumeroERegiao(Optional<String> nomeRegiao, Optional<String> numero);
 }

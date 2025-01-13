@@ -18,8 +18,7 @@ public class Vaga {
 	private String regiaoId;
 	private int numero;
 	private boolean disponivel;
-	private String latitude;
-	private String longitude;
+	private Localizacao localizacao;
 	private LocalDateTime dataCriacao;
 	private LocalDateTime dataUltimaAtualizacao;
 }

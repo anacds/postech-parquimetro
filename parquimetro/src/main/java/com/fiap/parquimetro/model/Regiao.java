@@ -17,8 +17,7 @@ public class Regiao {
 	private String descricao;
 	private String zona;
 	private int tempoToleranciaMinutos;
-	private Double valorTarifa;
-	private String moeda;
+	private Valor tarifaPorMinuto;
 	private LocalDateTime dataCriacao;
 	private LocalDateTime dataUltimaAtualizacao;
 }

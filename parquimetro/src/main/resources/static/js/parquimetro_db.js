@@ -58,8 +58,7 @@ db.Vaga.insertMany([
     regiaoId: ObjectId(),
     numero: 10,
     disponivel: true,
-    latitude: -23.563210,
-    longitude: -46.654321 ,
+    localizacao:{ latitude: -23.563210, longitude: -46.654321},
     dataCriacao: new Date(),
     dataUltimaAtualizacao: new Date(),
   }

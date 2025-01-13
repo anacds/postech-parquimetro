@@ -79,11 +79,16 @@ public class VagaServiceImpl implements VagaService{
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
-	
-	
+	public ResponseEntity<?> alterarDisponibilidade(String id) {
+		Vaga vaga = vagaRepository.findById(id).orElseThrow(() -> new IllegalArgumentException());
+		if(vaga == null) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vaga não encontrada");
+		}
+		vaga.setDisponivel(!vaga.isDisponivel());
+		vaga.setDataUltimaAtualizacao(LocalDateTime.now());
+		vagaRepository.save(vaga);
+		return ResponseEntity.status(HttpStatus.OK).build();
 
-
-
-	
+	}
 	
 }

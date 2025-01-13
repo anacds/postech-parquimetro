@@ -53,4 +53,9 @@ public class VagaController {
 	public ResponseEntity<?> alterarVaga(@PathVariable String id, @RequestBody Vaga vaga){
 		return vagaService.alterarVaga(id, vaga);
 	}
+	
+	@PutMapping("/disponivel/{id}")
+	public ResponseEntity<?> alterarDisponibilidade(@PathVariable String id){
+		return vagaService.alterarDisponibilidade(id);
+	}
 }
