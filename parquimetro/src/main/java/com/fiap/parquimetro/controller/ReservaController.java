@@ -52,8 +52,8 @@ public class ReservaController {
     }
 
     @GetMapping("/{id}/tempo-restante")
-    public int consultaTempoRestante(@PathVariable String id) {
-        return this.reservaService.consultaTempoRestante(id);
+    public int consultarTempoRestante(@PathVariable String id) {
+        return this.reservaService.consultarTempoRestante(id);
     }
 
     /*
@@ -64,8 +64,8 @@ public class ReservaController {
     */
 
     @PutMapping("/{id}/adicionar-tempo")
-    public ResponseEntity<?> adicionaMaisTempo(@PathVariable String id, @RequestBody int minutos) {
-        return this.reservaService.adicionaMaisTempo(id, minutos);
+    public ResponseEntity<?> adicionarMaisTempo(@PathVariable String id, @RequestBody int minutos) {
+        return this.reservaService.adicionarMaisTempo(id, minutos);
     }
 
     @PutMapping("/{id}/iniciar")

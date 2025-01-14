@@ -12,8 +12,8 @@ public interface ReservaService {
     public List<Reserva> listarReservasPorRegiao(String regiao);
     public List<Reserva> listarReservasPorPlaca(String placa);
     public Reserva buscarReservaPorId(String id);
-    public int consultaTempoRestante(String id);
-    public ResponseEntity<?> adicionaMaisTempo(String id, int minutos);
+    public int consultarTempoRestante(String id);
+    public ResponseEntity<?> adicionarMaisTempo(String id, int minutos);
     public Reserva iniciarReserva(String id);
     public Reserva encerrarReserva(String id);
     public ResponseEntity<?> cancelarReserva(String id);
