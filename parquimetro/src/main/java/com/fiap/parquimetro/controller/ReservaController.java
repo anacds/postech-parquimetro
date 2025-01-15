@@ -56,28 +56,19 @@ public class ReservaController {
         return this.reservaService.consultarTempoRestante(id);
     }
 
-    /*
-    @PutMapping("/{id}")
-    public void atualizarReserva(@PathVariable String id, @RequestBody Reserva reserva) {
-        this.reservaService.atualizarReserva(id, reserva);
-    }
-    */
-
     @PutMapping("/{id}/adicionar-tempo")
     public ResponseEntity<?> adicionarMaisTempo(@PathVariable String id, @RequestBody int minutos) {
         return this.reservaService.adicionarMaisTempo(id, minutos);
     }
 
     @PutMapping("/{id}/iniciar")
-    public ResponseEntity<Reserva> iniciarReserva(@PathVariable String id) {
-        Reserva reserva = this.reservaService.iniciarReserva(id);
-        return ResponseEntity.ok(reserva);
+    public ResponseEntity<?> iniciarReserva(@PathVariable String id) {
+        return this.reservaService.iniciarReserva(id);
     }
 
     @PutMapping("/{id}/encerrar")
-    public ResponseEntity<Reserva> encerrarReserva(@PathVariable String id) {
-        Reserva reserva = this.reservaService.encerrarReserva(id);
-        return ResponseEntity.ok(reserva);
+    public ResponseEntity<?> encerrarReserva(@PathVariable String id) {
+        return this.reservaService.encerrarReserva(id);
     }
 
     @PutMapping("/{id}/cancelar")

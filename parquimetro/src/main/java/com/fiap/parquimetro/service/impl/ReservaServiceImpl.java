@@ -116,11 +116,11 @@ public class ReservaServiceImpl implements ReservaService {
         Reserva reserva = buscarReservaPorId(id);
 
         if (!"ATIVA".equalsIgnoreCase(reserva.getStatus())) {
-            throw new RuntimeException("A reserva não está ativa.");
+            throw new IllegalStateException("A reserva não está ativa.");
         }
 
         if (reserva.getHorarioFimEstimado() == null) {
-            throw new RuntimeException("Horário de término estimado não configurado para esta reserva");
+            throw new IllegalStateException("Horário de término estimado não configurado para esta reserva");
         }
         Duration duracaoReserva = Duration.between(LocalDateTime.now(), reserva.getHorarioFimEstimado());
         return (int) Math.max(0, duracaoReserva.toMinutes());
@@ -132,7 +132,7 @@ public class ReservaServiceImpl implements ReservaService {
         Reserva reserva = buscarReservaPorId(id);
 
         if (!"ATIVA".equalsIgnoreCase(reserva.getStatus())) {
-            throw new RuntimeException("Apenas as reservas com status ATIVA podem ter tempo adicionado.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Apenas as reservas com status ATIVA podem ter tempo adicionado.");
         }
 
         try {
@@ -147,38 +147,47 @@ public class ReservaServiceImpl implements ReservaService {
     }
 
     @Override
-    public Reserva iniciarReserva(String id) {
+    public ResponseEntity<?> iniciarReserva(String id) {
         Reserva reserva = buscarReservaPorId(id);
 
         if (!"PENDENTE".equalsIgnoreCase(reserva.getStatus())) {
-            throw new RuntimeException("Apenas as reservas com status PENDENTE podem ser iniciadas.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Apenas reservas com status PENDENTE podem ser iniciadas.");
         }
 
-        reserva.setStatus("ATIVA");
-        reserva.setHorarioInicio(LocalDateTime.now());
-        reserva.setDataUltimaAtualizacao(LocalDateTime.now());
-
-        return reservaRepository.save(reserva);
+        try {
+            reserva.setStatus("ATIVA");
+            reserva.setHorarioInicio(LocalDateTime.now());
+            reserva.setDataUltimaAtualizacao(LocalDateTime.now());
+            this.reservaRepository.save(reserva);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao iniciar reserva: " + e.getMessage());
+        }
     }
 
     @Override
-    public Reserva encerrarReserva(String id) {
+    public ResponseEntity<?> encerrarReserva(String id) {
         Reserva reserva = buscarReservaPorId(id);
 
         if (!"ATIVA".equalsIgnoreCase(reserva.getStatus())) {
-            throw new RuntimeException("Apenas as reservas com status ATIVA podem ser encerradas.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Apenas reservas com status ATIVA podem ser encerradas.");
         }
 
-        reserva.setStatus("ENCERRADA");
-        reserva.setHorarioFimReal(LocalDateTime.now());
+        try {
+            if (reserva.getHorarioInicio() != null) {
+                Duration duracao = Duration.between(reserva.getHorarioInicio(), LocalDateTime.now());
+                reserva.setTempoUsadoMinutos((int) duracao.toMinutes());
+            }
 
-        if (reserva.getHorarioInicio() != null) {
-            Duration duracao = Duration.between(reserva.getHorarioInicio(), reserva.getHorarioFimReal());
-
-            reserva.setTempoUsadoMinutos((int) duracao.toMinutes());
+            reserva.setStatus("ENCERRADA");
+            reserva.setHorarioFimReal(LocalDateTime.now());
+            this.reservaRepository.save(reserva);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao encerrar reserva: " + e.getMessage());
         }
-
-        return reservaRepository.save(reserva);
     }
 
     @Override
