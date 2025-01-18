@@ -5,10 +5,10 @@ import com.fiap.parquimetro.service.ReservaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @RestController
@@ -19,18 +19,35 @@ public class ReservaController {
   @Autowired
   private ReservaService reservaService;
 
-  @Operation(summary = "Criar uma nova reserva", description = "Endpoint para criar uma nova reserva de parquímetro.")
-  @PostMapping
-  public Reserva criarReserva(@RequestBody Reserva reserva) {
-    return this.reservaService.criarReserva(reserva);
-  }
+    @PostMapping
+    public ResponseEntity<?> criarReserva(@RequestBody Reserva reserva){
+        return this.reservaService.criarReserva(reserva);
+    }
 
-  @Operation(summary = "Listar todas as reservas", description = "Endpoint para listar todas as reservas de parquímetro.")
-  @GetMapping
-  public List<Reserva> listarTodasReservas(@RequestParam Optional<String> regiao,
-                                           @RequestParam Optional<String> placa) {
-    return this.reservaService.listarTodasReservas(regiao, placa);
-  }
+    /*
+    @GetMapping
+    public List<Reserva> listarReservas(@RequestParam Optional<String> regiao,
+                                        @RequestParam Optional<String> placa) {
+        return this.reservaService.listarReservas(regiao, placa);
+    }
+    */
+
+    @GetMapping
+    public List<Reserva> listarTodasReservas() {
+        return this.reservaService.listarTodasReservas();
+    }
+
+    @GetMapping("/regiao")
+    public ResponseEntity<List<Reserva>> listarPorRegiao(@RequestParam String regiao) {
+        List<Reserva> reservas = reservaService.listarReservasPorRegiao(regiao);
+        return ResponseEntity.ok(reservas);
+    }
+
+    @GetMapping("/placa")
+    public ResponseEntity<List<Reserva>> listarPorPlaca(@RequestParam String placa) {
+        List<Reserva> reservas = reservaService.listarReservasPorPlaca(placa);
+        return ResponseEntity.ok(reservas);
+    }
 
   @Operation(summary = "Busca uma nova reserva pelo Id", description = "Endpoint para buscar uma nova reserva de parquímetro.")
   @GetMapping("/{id}")
@@ -38,29 +55,30 @@ public class ReservaController {
     return this.reservaService.buscarReservaPorId(id);
   }
 
-  @Operation(summary = "Consulta tempo restante", description = "Endpoint para consulta o tempo restante da reserva de parquímetro.")
-  @GetMapping("/{id}/tempo-restante")
-  public int consultaTempoRestante(@PathVariable String id) {
-    return this.reservaService.consultaTempoRestante(id);
-  }
+    @GetMapping("/{id}/tempo-restante")
+    public int consultarTempoRestante(@PathVariable String id) {
+        return this.reservaService.consultarTempoRestante(id);
+    }
 
-  @Operation(summary = "Deletar uma reserva", description = "Endpoint para deletar uma reserva de parquímetro.")
-  @DeleteMapping("/{id}")
-  public void excluirReserva(@PathVariable String id) {
-    this.reservaService.excluirReserva(id);
-  }
+    @PutMapping("/{id}/adicionar-tempo")
+    public ResponseEntity<?> adicionarMaisTempo(@PathVariable String id, @RequestBody int minutos) {
+        return this.reservaService.adicionarMaisTempo(id, minutos);
+    }
 
-  @Operation(summary = "Atualizar uma reserva existente", description = "Endpoint para atualizar os dados de uma reserva existente no sistema de parquímetros.")
-  @PutMapping("/{id}")
-  public void atualizarReserva(@PathVariable String id, @RequestBody Reserva reserva) {
-    this.reservaService.atualizarReserva(id, reserva);
-  }
+    @PutMapping("/{id}/iniciar")
+    public ResponseEntity<?> iniciarReserva(@PathVariable String id) {
+        return this.reservaService.iniciarReserva(id);
+    }
 
-    /*
-    public int consultaTempoRestante(String id);
-    public Reserva adicionaMaisTempo(String id, int minutos);
-    public Reserva iniciarReserva(String id);
-    public Reserva encerrarReserva(String id);
-    */
+    @PutMapping("/{id}/encerrar")
+    public ResponseEntity<?> encerrarReserva(@PathVariable String id) {
+        return this.reservaService.encerrarReserva(id);
+    }
+
+    @PutMapping("/{id}/cancelar")
+    public ResponseEntity<?> cancelarReserva(@PathVariable("id") String id) {
+        return reservaService.cancelarReserva(id);
+    }
+
 
 }

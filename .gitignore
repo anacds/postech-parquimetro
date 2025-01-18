@@ -40,3 +40,25 @@ Thumbs.db
 # Arquivos de teste de cobertura
 *.out
 *.cobertura
+
+# IntelliJ arquivos e diretórios gerados automaticamente
+.idea/
+*.iml
+
+# Logs do sistema e do aplicativo
+*.log
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos binários e gerados
+*.class
+
+# Configurações temporárias ou locais
+*.swp
+*.swo
+
+# Arquivos de teste de cobertura
+*.out
+*.cobertura

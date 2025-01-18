@@ -22,6 +22,7 @@ public class Reserva {
     private Integer tempoUsadoMinutos;
     private String status;
     private Valor valorPago;
+
     private Vaga vaga;
     /*
     private Usuario usuario;
