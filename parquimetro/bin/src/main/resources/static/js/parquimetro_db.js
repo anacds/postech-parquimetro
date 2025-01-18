@@ -58,7 +58,11 @@ db.Vaga.insertMany([
     regiaoId: ObjectId(),
     numero: 10,
     disponivel: true,
+<<<<<<< HEAD
     localizacao:{ latitude: -23.563210, longitude: -46.654321},
+=======
+    localizacao: { latitude: -23.563210, longitude: -46.654321 },
+>>>>>>> remotes/origin/new-feature-luskafer
     dataCriacao: new Date(),
     dataUltimaAtualizacao: new Date(),
   }
