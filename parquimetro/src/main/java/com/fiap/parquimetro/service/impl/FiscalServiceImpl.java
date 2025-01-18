@@ -1,5 +1,6 @@
 package com.fiap.parquimetro.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,12 +34,8 @@ public class FiscalServiceImpl implements FiscalService{
 
 	@Override
 	public Fiscal criar(Fiscal fiscal) {	
-		
-		//verifica se o cpf ja foi cadastrado em outra conta
-		Fiscal fiscalExistente = fiscalRepository.findByCpf(fiscal.getCpf());
-		if (fiscalExistente != null) {
-            throw new RuntimeException("Já existe um fiscal cadastrado com este CPF: " + fiscal.getCpf());
-        }
+		fiscal.setDataCriacao(LocalDateTime.now());
+		fiscal.setDataUltimaAtualizacao(LocalDateTime.now());
 		return this.fiscalRepository.save(fiscal);
 	}
 	
@@ -51,10 +48,10 @@ public class FiscalServiceImpl implements FiscalService{
 	            
 				fiscal.setOrgao(fiscalAtualizado.getOrgao());
 	            fiscal.setNome(fiscalAtualizado.getNome());
-	            fiscal.setCpf(fiscalAtualizado.getCpf());
 	            fiscal.setCnpj(fiscalAtualizado.getCnpj());
 	            fiscal.setEmail(fiscalAtualizado.getEmail());
 	            fiscal.setNumeroCelular(fiscalAtualizado.getNumeroCelular());
+				fiscal.setDataUltimaAtualizacao(LocalDateTime.now());
 
 
 	            return fiscalRepository.save(fiscal);

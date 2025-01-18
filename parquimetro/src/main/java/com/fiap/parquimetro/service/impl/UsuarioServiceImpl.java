@@ -1,5 +1,6 @@
 package com.fiap.parquimetro.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,6 +46,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 		if (usuarioExistente != null) {
             throw new RuntimeException("Já existe um usuário com este CPF: " + usuario.getCpf());
         }
+        usuario.setDataCriacao(LocalDateTime.now());
+        usuario.setDataUltimaAtualizacao(LocalDateTime.now());
 		return this.usuarioRepository.save(usuario);
 	}
 	
@@ -61,6 +64,7 @@ public class UsuarioServiceImpl implements UsuarioService{
             usuario.setNumeroCelular(usuarioAtualizado.getNumeroCelular());
             usuario.setPlacasCarro(usuarioAtualizado.getPlacasCarro());
             usuario.setPreferencias(usuarioAtualizado.getPreferencias());
+            usuario.setDataUltimaAtualizacao(LocalDateTime.now());
 
             return usuarioRepository.save(usuario);
         } else {

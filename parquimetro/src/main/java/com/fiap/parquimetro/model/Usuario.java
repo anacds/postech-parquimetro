@@ -15,39 +15,23 @@ import lombok.Data;
 
 @Document(collection = "Usuario")
 @Data
-public class Usuario{	
+public class Usuario extends Pessoa{	
 
 	@Id
 	@JsonProperty("id") //tive que usar "JsonProperty" sem ele ficava tudo "null".. n sei pq..
 	private String id;	
 	
-	@JsonProperty("nome")
-	private String nome;
-	
+
 	@JsonProperty("cpf")
 	private Long cpf;
-	
-	@JsonProperty("email")
-	private String email;
-	
-	@JsonProperty("numeroCelular")
-	private Long numeroCelular;
-	
+
+
 	@JsonProperty("placasCarro")
     private Set<String> placasCarro = new HashSet<>(); //  HashSet para evitar duplicatas
 	
 	@JsonProperty("preferencias")
     private Preferencias preferencias; 
 	
-	@CreatedDate
-	@JsonProperty("dataCriacao")
-    private LocalDateTime dataCriacao;
-	
-	@LastModifiedDate
-	@JsonProperty("dataUltimaAtualização")
-    private LocalDateTime dataUltimaAtualização;
-
-    
 	
 		
     
