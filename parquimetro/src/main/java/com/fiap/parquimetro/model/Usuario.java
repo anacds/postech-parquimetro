@@ -46,60 +46,6 @@ public class Usuario{
 	@LastModifiedDate
 	@JsonProperty("dataUltimaAtualização")
     private LocalDateTime dataUltimaAtualização;
-	
-	 // Getters e setters da Preferencias
-    public Preferencias getPreferencias() {
-        return preferencias;
-    }
-
-    public void setPreferencias(Preferencias preferencias) {
-        this.preferencias = preferencias;
-    }
-
-	public String getId() {
-		return id;
-	}
-
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public Long getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(Long cpf) {
-		this.cpf = cpf;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public Long getNumeroCelular() {
-		return numeroCelular;
-	}
-
-	public void setNumeroCelular(Long numeroCelular) {
-		this.numeroCelular = numeroCelular;
-	}
-
-	public Set<String> getPlacasCarro() {
-		return placasCarro;
-	}
-
-	public void setPlacasCarro(Set<String> placasCarro) {
-		this.placasCarro = placasCarro;
-	}
 
     
 	

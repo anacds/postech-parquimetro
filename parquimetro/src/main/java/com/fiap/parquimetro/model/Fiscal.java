@@ -21,6 +21,9 @@ public class Fiscal {
 	@JsonProperty("id") 
 	private String id;	
 	
+	@JsonProperty("orgao") 
+	private String orgao;	
+
 	@JsonProperty("nome")
 	private String nome;
 	
@@ -45,58 +48,6 @@ public class Fiscal {
     private LocalDateTime dataUltimaAtualização;
 		
 
-	public Long getCpf() {
-		return cpf;
-	}
-	
-	public void setCpf(Long cpf) {
-		this.cpf = cpf;
-	}
-
-
-	public String getId() {
-		return id;
-	}
-
-
-	public String getNome() {
-		return nome;
-	}
-
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-
-	public Long getCnpj() {
-		return cnpj;
-	}
-
-
-	public void setCnpj(Long cnpj) {
-		this.cnpj = cnpj;
-	}
-
-
-	public String getEmail() {
-		return email;
-	}
-
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-
-	public Long getNumeroCelular() {
-		return numeroCelular;
-	}
-
-
-	public void setNumeroCelular(Long numeroCelular) {
-		this.numeroCelular = numeroCelular;
-	}
 
 
 

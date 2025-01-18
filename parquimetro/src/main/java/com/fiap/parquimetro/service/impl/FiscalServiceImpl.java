@@ -49,6 +49,7 @@ public class FiscalServiceImpl implements FiscalService{
 	        if (fiscalExistente.isPresent()) {
 	            Fiscal fiscal = fiscalExistente.get();
 	            
+				fiscal.setOrgao(fiscalAtualizado.getOrgao());
 	            fiscal.setNome(fiscalAtualizado.getNome());
 	            fiscal.setCpf(fiscalAtualizado.getCpf());
 	            fiscal.setCnpj(fiscalAtualizado.getCnpj());

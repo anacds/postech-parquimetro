@@ -1,5 +1,8 @@
 package com.fiap.parquimetro.model;
 
+import lombok.Data;
+
+@Data
 public class Preferencias {
 
     private boolean notificacoes;

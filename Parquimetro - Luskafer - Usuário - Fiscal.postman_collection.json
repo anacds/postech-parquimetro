@@ -171,7 +171,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"nome\": \"Fiscal teste\",\r\n    \"cpf\": 1234567829,\r\n    \"cnpj\": 2131313132132,\r\n    \"email\": \"joao.silva@email.com\",\r\n    \"numeroCelular\": 55991234567\r\n}",
+					"raw": "{\r\n    \"orgao\": \"teste\",\r\n    \"nome\": \"Fiscal teste\",\r\n    \"cpf\": 1234567829,\r\n    \"cnpj\": 2131313132132,\r\n    \"email\": \"joao.silva@email.com\",\r\n    \"numeroCelular\": 55991234567\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
