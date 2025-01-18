@@ -3,6 +3,8 @@ package com.fiap.parquimetro.controller;
 import java.util.List;
 import java.util.Optional;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +21,7 @@ import com.fiap.parquimetro.service.VagaService;
 
 @RestController
 @RequestMapping(value = "/vagas")
+@Tag(name = "Vagas", description = "Gerenciamento de vagas disponíveis nos parquímetros.")
 public class VagaController {
 
 	@Autowired

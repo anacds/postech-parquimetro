@@ -2,6 +2,8 @@ package com.fiap.parquimetro.controller;
 
 import com.fiap.parquimetro.model.Reserva;
 import com.fiap.parquimetro.service.ReservaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +13,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/reservas")
+@Tag(name = "Reservas", description = "Gerenciamento de reservas de parquímetros")
 public class ReservaController {
 
-    @Autowired
-    private ReservaService reservaService;
+  @Autowired
+  private ReservaService reservaService;
 
     @PostMapping
     public ResponseEntity<?> criarReserva(@RequestBody Reserva reserva){
@@ -46,10 +49,11 @@ public class ReservaController {
         return ResponseEntity.ok(reservas);
     }
 
-    @GetMapping("/{id}")
-    public Reserva buscarReservaPorId(@PathVariable String id){
-        return this.reservaService.buscarReservaPorId(id);
-    }
+  @Operation(summary = "Busca uma nova reserva pelo Id", description = "Endpoint para buscar uma nova reserva de parquímetro.")
+  @GetMapping("/{id}")
+  public Reserva buscarReservaPorId(@PathVariable String id) {
+    return this.reservaService.buscarReservaPorId(id);
+  }
 
     @GetMapping("/{id}/tempo-restante")
     public int consultarTempoRestante(@PathVariable String id) {
