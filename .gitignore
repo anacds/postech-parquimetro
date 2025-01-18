@@ -1,3 +1,4 @@
+# Ignore diretório de builds do Maven
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -6,13 +7,36 @@ pom.xml.next
 release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
+
+# Arquivos temporários e gerados pelo Maven Wrapper
 .mvn/timing.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
 
-# Eclipse m2e generated files
-# Eclipse Core
+# Eclipse arquivos gerados automaticamente
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 /.metadata/
+
+# IntelliJ arquivos e diretórios gerados automaticamente
+.idea/
+*.iml
+
+# Logs do sistema e do aplicativo
+*.log
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos binários e gerados
+*.class
+
+# Configurações temporárias ou locais
+*.swp
+*.swo
+
+# Arquivos de teste de cobertura
+*.out
+*.cobertura
