@@ -10,14 +10,14 @@ buildNumber.properties
 
 # Arquivos temporários e gerados pelo Maven Wrapper
 .mvn/timing.properties
+# https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
 
 # Eclipse arquivos gerados automaticamente
 .project
+# JDT-specific (Eclipse Java Development Tools)
 .classpath
-<<<<<<< HEAD
 /.metadata/
-=======
 
 # IntelliJ arquivos e diretórios gerados automaticamente
 .idea/
@@ -40,4 +40,25 @@ Thumbs.db
 # Arquivos de teste de cobertura
 *.out
 *.cobertura
->>>>>>> remotes/origin/feat/add-swagger
+
+# IntelliJ arquivos e diretórios gerados automaticamente
+.idea/
+*.iml
+
+# Logs do sistema e do aplicativo
+*.log
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos binários e gerados
+*.class
+
+# Configurações temporárias ou locais
+*.swp
+*.swo
+
+# Arquivos de teste de cobertura
+*.out
+*.cobertura

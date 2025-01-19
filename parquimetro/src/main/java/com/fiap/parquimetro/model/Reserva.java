@@ -2,12 +2,16 @@ package com.fiap.parquimetro.model;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
 @Document("Reserva")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Reserva {
     @Id
     private String reservaId;
@@ -20,9 +24,10 @@ public class Reserva {
     private Valor valorPago;
 
     private Vaga vaga;
+    /*
     private Usuario usuario;
     private Regiao regiao;
-
+    */
     private LocalDateTime dataCriacao;
     private LocalDateTime dataUltimaAtualizacao;
 
