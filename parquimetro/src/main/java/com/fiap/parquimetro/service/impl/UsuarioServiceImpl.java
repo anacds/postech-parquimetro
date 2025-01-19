@@ -44,7 +44,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		//verifica se o cpf ja foi cadastrado em outra conta
 		Usuario usuarioExistente = usuarioRepository.findByCpf(usuario.getCpf());
 		if (usuarioExistente != null) {
-            throw new RuntimeException("Já existe um usuário com este CPF: " + usuario.getCpf());
+            throw new RuntimeException("Já existe um usuário cadastrado com este CPF: " + usuario.getCpf());
         }
         usuario.setDataCriacao(LocalDateTime.now());
         usuario.setDataUltimaAtualizacao(LocalDateTime.now());

@@ -33,7 +33,11 @@ public class FiscalServiceImpl implements FiscalService{
 	}
 
 	@Override
-	public Fiscal criar(Fiscal fiscal) {	
+	public Fiscal criar(Fiscal fiscal) {
+		Fiscal fiscalExistente = fiscalRepository.findByCpf(fiscal.getCpf());
+		if (fiscalExistente != null) {
+            throw new RuntimeException("Já existe um fiscal cadastrado com este CPF: " + fiscal.getCpf());
+        }	
 		fiscal.setDataCriacao(LocalDateTime.now());
 		fiscal.setDataUltimaAtualizacao(LocalDateTime.now());
 		return this.fiscalRepository.save(fiscal);
@@ -49,6 +53,7 @@ public class FiscalServiceImpl implements FiscalService{
 				fiscal.setOrgao(fiscalAtualizado.getOrgao());
 	            fiscal.setNome(fiscalAtualizado.getNome());
 	            fiscal.setCnpj(fiscalAtualizado.getCnpj());
+				fiscal.setCpf(fiscalAtualizado.getCpf());
 	            fiscal.setEmail(fiscalAtualizado.getEmail());
 	            fiscal.setNumeroCelular(fiscalAtualizado.getNumeroCelular());
 				fiscal.setDataUltimaAtualizacao(LocalDateTime.now());
