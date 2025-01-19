@@ -15,38 +15,37 @@ import lombok.Data;
 @Document(collection = "Fiscal")
 @Data
 public class Fiscal {
-	
-	
+
 	@Id
-	@JsonProperty("id") 
-	private String id;	
-	
-	@JsonProperty("orgao") 
-	private String orgao;	
+	@JsonProperty("id")
+	private String id;
+
+	@JsonProperty("orgao")
+	private String orgao;
 
 	@JsonProperty("nome")
 	private String nome;
-	
+
 	@JsonProperty("cpf")
 	private Long cpf;
-	
+
 	@JsonProperty("cnpj")
 	private Long cnpj;
-	
+
 	@JsonProperty("email")
 	private String email;
-	
+
 	@JsonProperty("numeroCelular")
 	private Long numeroCelular;
-	
+
 	@CreatedDate
 	@JsonProperty("dataCriacao")
     private LocalDateTime dataCriacao;
-	
+
 	@LastModifiedDate
 	@JsonProperty("dataUltimaAtualização")
     private LocalDateTime dataUltimaAtualização;
-		
+
 
 
 
