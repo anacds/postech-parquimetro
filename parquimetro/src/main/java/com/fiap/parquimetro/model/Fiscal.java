@@ -15,22 +15,22 @@ import lombok.Data;
 @Document(collection = "Fiscal")
 @Data
 public class Fiscal extends Pessoa {
-	
-	
+
+
 	@Id
-	private String id;	
-	
-	@JsonProperty("orgao") 
-	private String orgao;	
+	private String id;
+
+	@JsonProperty("orgao")
+	private String orgao;
 
 	@JsonProperty("cpf")
 	private Long cpf;
-	
+
 	@JsonProperty("cnpj")
 	private Long cnpj;
 
 
-	
+
 
 
 
