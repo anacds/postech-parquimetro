@@ -137,8 +137,8 @@ http://localhost:8080
   - Exemplo de corpo da requisição:
     ```json
     {
-      "localizacao": "Centro",
-      "status": "DISPONIVEL"
+      "numero": 34
+      "regiao": {"nome": "Sul"}
     }
     ```
 
