@@ -18,13 +18,7 @@ import lombok.Data;
 public class Usuario extends Pessoa{	
 
 	@Id
-	@JsonProperty("id") //tive que usar "JsonProperty" sem ele ficava tudo "null".. n sei pq..
 	private String id;	
-	
-
-	@JsonProperty("cpf")
-	private Long cpf;
-
 
 	@JsonProperty("placasCarro")
     private Set<String> placasCarro = new HashSet<>(); //  HashSet para evitar duplicatas

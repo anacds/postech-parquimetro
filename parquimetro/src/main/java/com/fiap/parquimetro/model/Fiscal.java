@@ -20,11 +20,8 @@ public class Fiscal extends Pessoa {
 	@Id
 	private String id;	
 	
-	@JsonProperty("orgao") 
-	private String orgao;	
-
-	@JsonProperty("cpf")
-	private Long cpf;
+	@JsonProperty("nomeOrgao") 
+	private String nomeOrgao;	
 	
 	@JsonProperty("cnpj")
 	private Long cnpj;
