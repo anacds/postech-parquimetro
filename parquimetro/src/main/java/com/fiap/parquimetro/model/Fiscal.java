@@ -15,8 +15,8 @@ import lombok.Data;
 @Document(collection = "Fiscal")
 @Data
 public class Fiscal extends Pessoa {
-	
-	
+
+
 	@Id
 	private String id;	
 	
@@ -27,7 +27,7 @@ public class Fiscal extends Pessoa {
 	private Long cnpj;
 
 
-	
+
 
 
 
