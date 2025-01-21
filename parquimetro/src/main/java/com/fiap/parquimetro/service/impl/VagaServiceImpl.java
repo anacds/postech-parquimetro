@@ -17,9 +17,7 @@ import com.fiap.parquimetro.service.VagaService;
 
 @Service
 public class VagaServiceImpl implements VagaService{
-	
-	//TODO: método de alterar disponibilidade
-	
+
 	private final MongoTemplate mongoTemplate;
 	
 	@Autowired

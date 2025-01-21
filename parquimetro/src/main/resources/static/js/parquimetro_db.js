@@ -1,7 +1,7 @@
 const dbName = "parquimetro";
 const db = db.getSiblingDB(dbName);
 
-db.createCollection("Usuarios");
+db.createCollection("Usuario");
 db.createCollection("Reserva");
 db.createCollection("Regiao");
 db.createCollection("Vaga");
@@ -56,6 +56,7 @@ db.Regiao.insertMany([
 db.Vaga.insertMany([
   {
     regiaoId: ObjectId(),
+	regiao: {nome: "Centro"},
     numero: 10,
     disponivel: true,
     localizacao:{ latitude: -23.563210, longitude: -46.654321},
