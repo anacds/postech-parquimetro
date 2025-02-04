@@ -17,7 +17,7 @@ Aplicativo de gerenciamento de reservas e vagas de parquímetros. Esta API permi
   - Consultar vaga por ID.
 
 - **Swagger/OpenAPI:**
-  - Documentação interativa acessível em `http://localhost:8080/swagger-ui.html`.
+  - Documentação interativa acessível em `http://3.90.210.43:8080/swagger-ui/index.html`.
 
 - **Docker:**
   - Implementação via `Dockerfile` e `docker-compose.yml` para execução local.
@@ -166,4 +166,4 @@ http://localhost:8080/swagger-ui.html
 - **Springdoc OpenAPI (Swagger)**
 - **Lombok**
 - **Docker**
- 
+
