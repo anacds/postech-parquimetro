@@ -1,19 +1,6 @@
 version: '3.8'
 
 services:
-  parquimetro-service:
-    image: parquimetro-service:latest
-    container_name: parquimetro-service
-    build:
-      context: .
-    ports:
-      - "8080:8080"
-    environment:
-      - SPRING_DATA_MONGODB_URI=mongodb://mongo:27017/parquimetro
-    depends_on:
-      - mongo
-    networks:
-      - app_network
 
   mongo:
     image: mongo:latest
